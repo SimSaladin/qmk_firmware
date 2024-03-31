@@ -22,9 +22,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+// Default is 5 ms
+#define DEBOUNCE 8
+
 // Mouse Keys (kinetic mode)
 #define MK_KINETIC_SPEED
 #define MOUSEKEY_DELAY         0
 #define MOUSEKEY_INTERVAL      1
 #define MOUSEKEY_MOVE_DELTA    10
 #define MOUSEKEY_INITIAL_SPEED 350
+
+#define NO_MUSIC_MODE
