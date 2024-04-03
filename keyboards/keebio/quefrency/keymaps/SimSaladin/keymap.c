@@ -4,6 +4,8 @@
 
 #include QMK_KEYBOARD_H
 
+#include "keymap_dvorak_programmer.h"
+
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
@@ -35,11 +37,11 @@ tap_dance_action_t tap_dance_actions[] = {
 */
 
 // backward word
-#define X_A_B  LALT(KC_B)
+#define X_A_B  LALT(DP_B)
 // forward word
-#define X_A_F  LALT(KC_F)
+#define X_A_F  LALT(DP_F)
 // delete forward word
-#define X_A_D  LALT(KC_D)
+#define X_A_D  LALT(DP_D)
 // delete backward word
 #define X_A_BS LALT(KC_BSPC)
 
