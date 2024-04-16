@@ -1,9 +1,22 @@
-# Build options
+# Do not put the microcontroller into power saving mode
+# when we get USB suspend event.
+#OPT_DEFS += -DNO_SUSPEND_POWER_DOWN
 
 MOUSEKEY_ENABLE = yes
+TERMINAL_ENABLE = no
+NKRO_ENABLE = yes
 #TAP_DANCE_ENABLE = yes    # Use multi-tap features
 #UNICODEMAP_ENABLE = yes
-#NKRO_ENABLE = yes
+AUTO_SHIFT_ENABLE = no
+AUTO_SHIFT_MODIFIERS = no
+BACKLIGHT_ENABLE = no
+BOOTMAGIC_ENABLE = lite
+CONSOLE_ENABLE = no
+COMBO_ENABLE = no
+LEADER_ENABLE = yes
+KEYBOARD_SHARED_EP = yes
 MOUSE_SHARED_EP = no
-DEBOUNCE_TYPE = asym_eager_defer_pk
-MUSIC_ENABLE = no
+OS_DETECTION_ENABLE = yes
+PROGRAMMABLE_BUTTON_ENABLE = yes
+ENCODER_MAP_ENABLE = yes
+REPEAT_KEY_ENABLE = yes
