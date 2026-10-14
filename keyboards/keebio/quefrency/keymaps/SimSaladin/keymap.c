@@ -7,10 +7,10 @@
 #include "keymap_dvorak_programmer.h"
 
 enum my_layers {
-  _BASE, // 0
-  _FN1, // 1
-  _MOUSE, // 2
-  _KEYPAD, // 3
+  _BASE,      // 0
+  _FN1,       // 1
+  _MOUSE,     // 2
+  _KEYPAD,    // 3
   LAYER_COUNT
 };
 
@@ -23,6 +23,15 @@ enum my_keycodes {
 #define X_A_F  LALT(DP_F)    // forward word
 #define X_A_D  LALT(DP_D)    // delete forward word
 #define X_A_BS LALT(KC_BSPC) // delete backward word
+
+// RGB-related keycodes: see features/rgblight.md
+// UG_TOGG - toggle underglow LEDs on/off
+// UG_NEXT / UG_PREV  - cycle modes  (was: RGB_MOD)
+// UG_HUEU / UG_HUED  - Hue up/down    (was: RGB_VAI)
+// UG_SATU / UG_SATD  - saturation inc/dec    (RGB_HUI)
+// UG_VALU / UG_VALD  - Increase/decrease brightness
+// UG_SPDU / UG_SPDD  - Speed up/down
+//
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_65(
@@ -43,13 +52,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ┌────────┬────────┬────────┬────────┬────────┬────────┬────────┐        ┌────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┐
     KC_ESC  ,KC_F1   ,KC_F2   ,KC_F3   ,KC_F4   ,KC_F5   ,KC_F6   ,         KC_F7   ,KC_F8   ,KC_F9   ,KC_F10  ,KC_F11  ,KC_F12  ,KC_NO   ,KC_DEL  ,QK_BOOT ,
 // ├────────┴────┬───┴────┬───┴────┬───┴────┬───┴────┬───┴────┬───┘    ┌───┴────┬───┴────┬───┴────┬───┴────┬───┴────┬───┴────┬───┴────┬───┴────────┼────────┤
-    _______      ,_______ ,X_A_BS  ,QK_REP  ,X_A_D   ,_______ ,         KC_PGUP ,KC_HOME ,KC_UP   ,KC_END  ,KC_DEL  ,_______ ,QK_LOCK ,_______     ,RGB_TOG ,
+    _______      ,_______ ,X_A_BS  ,QK_REP  ,X_A_D   ,_______ ,         KC_PGUP ,KC_HOME ,KC_UP   ,KC_END  ,KC_DEL  ,_______ ,QK_LOCK ,_______     ,UG_TOGG ,
 // ├─────────────┴─┬──────┴─┬──────┴─┬──────┴─┬──────┴─┬──────┴─┐      └─┬──────┴─┬──────┴─┬──────┴─┬──────┴─┬──────┴─┬──────┴─┬──────┴────────────┼────────┤
-    _______        ,KC_CAPS ,X_A_B   ,_______ ,X_A_F   ,_______ ,         KC_PGDN ,KC_LEFT ,KC_DOWN ,KC_RIGHT,KC_INS  ,_______ ,_______            ,RGB_MOD ,
+    _______        ,KC_CAPS ,X_A_B   ,_______ ,X_A_F   ,_______ ,         KC_PGDN ,KC_LEFT ,KC_DOWN ,KC_RIGHT,KC_INS  ,_______ ,_______            ,UG_NEXT ,
 // ├───────────────┴─────┬──┴─────┬──┴─────┬──┴─────┬──┴─────┬──┴─────┐  └─────┬──┴─────┬──┴─────┬──┴─────┬──┴─────┬──┴─────┬──┴───────────────────┼────────┤
-    _______              ,_______ ,_______ ,_______ ,_______ ,_______ ,         _______ ,PB_1    ,PB_2    ,PB_3    ,PB_4    ,_______ ,KC_NO        ,RGB_VAI ,
+    _______              ,_______ ,_______ ,_______ ,_______ ,_______ ,         _______ ,PB_1    ,PB_2    ,PB_3    ,PB_4    ,_______ ,KC_NO        ,UG_SATU ,
 // ├──────────┬──────────┴┬───────┴──┬─────┴─────┬──┴────────┴────────┤        ├────────┼────────┴────┬───┴────┬───┴────┬───┴────┬────────┬────────┼────────┤
-    _______   ,_______    ,_______   ,_______    ,_______             ,         QK_LEAD ,_______      ,_______ ,_______ ,KC_NO   ,_______ ,_______ ,RGB_HUI
+    _______   ,_______    ,_______   ,_______    ,_______             ,         QK_LEAD ,_______      ,_______ ,_______ ,KC_NO   ,_______ ,_______ ,UG_HUEU
 // └──────────┴───────────┴──────────┴───────────┴────────────────────┘        └────────┴─────────────┴────────┴────────┴────────┴────────┴────────┴────────┘
   ),
 
@@ -86,7 +95,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [_BASE]   = { ENCODER_CCW_CW(KC_VOLD,     KC_VOLU)       },
     [_FN1]    = { ENCODER_CCW_CW(KC_LEFT,     KC_RIGHT)      },
     [_MOUSE]  = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
-    [_KEYPAD] = { ENCODER_CCW_CW(RGB_SAD,     RGB_SAI)       },
+    [_KEYPAD] = { ENCODER_CCW_CW(UG_VALU,     UG_SPDU)       },
 };
 
 void eeconfig_init_user(void) {
