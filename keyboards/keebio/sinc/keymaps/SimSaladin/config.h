@@ -11,3 +11,7 @@
 
 // fallback for SPLIT_USB_DETECT: reboot if both halves end up as slaves.
 #define SPLIT_WATCHDOG_ENABLE
+
+// XXX
+#undef DEBOUNCE
+#define DEBOUNCE 0

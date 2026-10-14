@@ -58,6 +58,7 @@ void my_handle_cycle_layers(void) {
     layer_move(lr);
 }
 
+/*
 // #ifdef RGBLIGHT_TIMEOUT
 
 // timer for last keyboard activity, use 32bit value and function to make longer idle time possible
@@ -86,5 +87,6 @@ void my_post_process_record_user(uint16_t keycode, keyrecord_t *record) {
 	if (record->event.pressed)
 		my_rgblight_refresh();
 }
+*/
 
 // END RGBALIGHT_TIMEOUT
