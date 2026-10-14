@@ -1,8 +1,2 @@
 # Build options
-MOUSEKEY_ENABLE = yes
 
-NKRO_ENABLE = yes
-
-PROGRAMMABLE_BUTTON_ENABLE = yes
-
-ENCODER_MAP_ENABLE = yes
