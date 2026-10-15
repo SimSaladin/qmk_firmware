@@ -14,4 +14,4 @@
 
 // XXX
 #undef DEBOUNCE
-#define DEBOUNCE 0
+#define DEBOUNCE 8
