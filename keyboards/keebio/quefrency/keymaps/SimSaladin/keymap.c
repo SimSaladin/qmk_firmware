@@ -73,12 +73,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+#ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [_BASE]   = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [_FN1]    = { ENCODER_CCW_CW(KC_LEFT, KC_RGHT) },
     [_MS]     = { ENCODER_CCW_CW(MS_WHLU, MS_WHLD) },
-    [_KPAD] = { ENCODER_CCW_CW(UG_VALU, UG_SPDU) },
+    [_KPAD]   = { ENCODER_CCW_CW(UG_VALU, UG_SPDU) },
 };
+#endif
 
 // RGBLIGHT LAYERS
 
@@ -108,12 +110,33 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
   my_rgb_layer4
 );
 
-// overwrite magic functions placeholders to save firmware space
-uint16_t keycode_config(uint16_t keycode) {
-    return keycode;
+/**
+ * Encoder push repeats too eagerly, so add and emit press only after it's
+ * been pressed for a bit.
+ */
+void my_process_encoder_pressed(uint16_t keycode, keyrecord_t *record) {
+    static uint16_t timer   = 0;
+    static bool     pressed = false;
+    if (record->event.pressed) {
+        pressed = true;
+        timer   = timer_read();
+    } else if (pressed && timer_elapsed(timer) >= TAP_CODE_DELAY) {
+        pressed = false;
+        tap_code16(keycode);
+    }
 }
-uint8_t mod_config(uint8_t mod) {
-    return mod;
+
+void my_handle_cycle_layers(void) {
+    uint8_t lr = get_highest_layer(layer_state);
+    // Check if we are within the range, if not quit
+    if (lr >= LAYER_COUNT || lr < _BASE) {
+        return;
+    }
+    lr++;
+    if (lr >= LAYER_COUNT) {
+        lr = _BASE;
+    }
+    layer_move(lr);
 }
 
 
@@ -123,13 +146,7 @@ void eeconfig_init_user(void) { }
 
 void matrix_init_user(void) { };
 
-// void housekeeping_task_user(void) {
-// #ifdef RGBLIGHT_TIMEOUT
-// 	my_rgblight_check_timeout();
-// #endif
-// }
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     // Encoder push repeats too eagerly, so add delay.
     if (record->event.key.col == 8 && record->event.key.row == 5 && keycode <= QK_BASIC_MAX) {
 	my_process_encoder_pressed(keycode, record);
@@ -143,6 +160,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+
 
 // HOOKS :: Layer Change
 
@@ -159,15 +177,6 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
 }
 
 // POSTPROCESSING HOOKS
-
-void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
-	// blink leds on certain keys
-	switch (keycode) {
-		case QK_BOOT:
-			rgblight_blink_layer_repeat(1, 250, 4);
-			break;
-	}
-}
 
 void keyboard_post_init_user(void) {
 	// Enable LED layers

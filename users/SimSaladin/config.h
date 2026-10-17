@@ -35,7 +35,7 @@
 #define RGBLIGHT_SLEEP // Switch off rgblight when host goes to sleep
 #define RGBLIGHT_TIMEOUT 180000 // ms, Custom RGB light timeout
 // Defaults when EEPROM is cleared
-#define RGBLIGHT_DEFAULT_ON true
+//#define RGBLIGHT_DEFAULT_ON true
 #define RGBLIGHT_DEFAULT_VAL 200
 #undef RGBLIGHT_DEFAULT_MODE
 #define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_STATIC_LIGHT
